@@ -13,7 +13,7 @@ AgainToi is a Django-based platform for managing weddings and celebrity events. 
 
 1. Clone the repository:
    ```bash
-   git clone <repository_url>
+   git clone <https://github.com/daniyardautbaev/AgainToi.git>
    ```
 2. Navigate to the project directory:
    ```bash
