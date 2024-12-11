@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'user_profile.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Register User Profile</h1>
+        <form method="post" enctype="multipart/form-data" action="{% url 'user_register' %}">
+            {% csrf_token %}
+
+            <label for="phone">Phone number:</label>
+            <input type="text" name="phone" required>
+
+            <label for="image">User Image:</label>
+            <input type="file" name="image" accept="image/*">
+
+            <label for="region">Region:</label>
+            {{ addressForm.region }}
+
+            <label for="city">City:</label>
+            {{ addressForm.city }}
+
+            <button type="submit">Register</button>
+        </form>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const regionSelect = document.querySelector("select[name='region']");
+                const citySelect = document.querySelector("select[name='city']");
+
+                regionSelect.addEventListener("change", function () {
+                    const regionId = this.value;
+
+                    // Clear existing city options
+                    citySelect.innerHTML = '<option value="">Select city</option>';
+
+                    if (regionId) {
+                        fetch(`/cities/${regionId}/`)
+                            .then(response => response.json())
+                            .then(data => {
+                                data.forEach(city => {
+                                    const option = document.createElement("option");
+                                    option.value = city.id;
+                                    option.text = city.name;
+                                    citySelect.add(option);
+                                });
+                            })
+                            .catch(error => console.error("Error fetching cities:", error));
+                    }
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>

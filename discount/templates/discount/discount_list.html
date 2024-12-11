@@ -1,0 +1,67 @@
+{% extends "home/base.html" %}
+{% block content %}
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            color: #333;
+        }
+
+        .title {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+    </style>
+<h2 class="title">Discounters</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; padding: 20px;">
+    {% for discount in discounts %}
+    <div style="background: #f6f6f6; border: 0px solid #666666; padding: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); transition: transform 0.2s;">
+        <h3 style="color: #333;">
+            Discount Name: {{ discount.name }} <br>
+            Discount Percentage: {{ discount.percentage }}%
+        </h3>
+
+        {% if discount.show %}
+        <p><strong>Show Name: </strong>
+            <a href="{% url 'show_profile_user' discount.show.pk %}">{{ discount.show.show_name }}</a>
+        </p>
+        <p><strong>Original Price:</strong> {{ discount.show.price }}</p>
+        <p>
+            <strong>Discounted Price:</strong>
+            {% if discount.show_discounted_price %}
+                {{ discount.show_discounted_price }}
+            {% else %}
+                Not Available
+            {% endif %}
+        </p>
+        {% endif %}
+
+        {% if discount.company %}
+        <p><strong>Company Name: </strong>
+            <a href="{% url 'venue_profile_user' discount.company.pk %}">{{ discount.company.company_name }}</a>
+        </p>
+        <p><strong>Original Price:</strong>
+            {% if discount.company.price %}
+                {{ discount.company.price }}
+            {% else %}
+                Not Available
+            {% endif %}
+        </p>
+        <p>
+            <strong>Discounted Price:</strong>
+            {% if discount.company_discounted_price %}
+                {{ discount.company_discounted_price }}
+            {% else %}
+                Not Available
+            {% endif %}
+        </p>
+        {% endif %}
+
+        <p><strong>Status:</strong> {{ discount.status }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

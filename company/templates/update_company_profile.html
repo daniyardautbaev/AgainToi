@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Company Profile</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        input, select, button {
+            margin-top: 5px;
+            padding: 10px;
+            font-size: 14px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .back-btn {
+            background-color: #f1f1f1;
+            color: #333;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-align: center;
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+        }
+        .back-btn:hover {
+            background-color: #e1e1e1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Update Company Profile</h2>
+        <!-- Back Button next to the Heading -->
+        <a href="{% url 'venue_profile' %}" class="back-btn">← Back to Profile</a>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div>
+                <label for="id_panorama">Upload 360-degree Panorama:</label>
+                <input type="file" name="panorama" id="id_panorama">
+                {% if form.panorama.value %}
+                    <p>Current Panorama: <a href="{{ form.panorama.value.url }}" target="_blank">View</a></p>
+                {% endif %}
+            </div>
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+</body>
+</html>

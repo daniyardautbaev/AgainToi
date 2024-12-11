@@ -1,0 +1,47 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}Media Detail{% endblock %}
+
+
+{% block content %}
+    <div class="about-container">
+        <div class="about-title">
+            <div class="about-title-text">
+                <h1 class="about-title-text-h1">We are AgainTOI</h1>
+                <p class="about-title-text-p">
+                    We bring
+                    <strong>dream weddings</strong>
+                    to life!
+                </p>
+            </div>
+        </div>
+
+        <div class="media-detail">
+            <h2 class="page-main-title">Media Details</h2>
+
+            <div class="media-img-video">
+                {% if media.photo %}
+                    <img src="{{ media.photo.url }}" alt="Media Photo" width="390" height="500" class="media-detail-image">
+                {% endif %}
+
+                {% if media.video %}
+                    <video width="930" height="500" controls class="media-detail-video">
+                        <source src="{{ media.video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                {% endif %}
+            </div>
+
+            <div class="media-detail-text">
+                <p>Description: {{ media.description }}</p>
+                <p>Submitted by: {{ media.user }}</p>
+                <p>Submitted on: {{ media.created_at }}</p>
+
+            </div>
+            <a href="{% url 'media' %}" class="media-detail-back-button">←Back to Media List</a>
+        </div>
+
+    </div>
+
+{% endblock %}

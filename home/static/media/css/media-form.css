@@ -1,0 +1,31 @@
+.media-form {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    margin-left: 50px;
+}
+
+.media-form-group {
+    width: 552px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.media-form-group textarea {
+    border-radius: 10px;
+}
+
+.media-form-group textarea::placeholder {
+    padding: 10px;
+}
+
+.media-form-group label {
+    margin-top: 30px;
+}
+
+.media-add-image {
+    position: absolute;
+
+    right: 140px;
+    top: 600px;
+}

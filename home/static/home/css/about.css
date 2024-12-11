@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+
+.about-container {
+    margin-top: 20px;
+
+    box-sizing: border-box;
+
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.about-title {
+
+    height: 330px;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+    margin-top: 50px;
+
+    border-radius: 30px;
+
+    background: #F4F4F4;
+}
+
+.about-tile-text {
+
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+.about-title-text-h1 {
+
+    height: 120px;
+    width: 502px;
+
+    margin-bottom: 0;
+    margin-left: 120px;
+    margin-top: 30px;
+
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 56px;
+    line-height: 120px;
+
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.about-title-text-p {
+    width: 100px;
+    height: 87px;
+
+
+    font-family: 'Lato', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 29px;
+    text-align: center;
+
+    margin-top: 0;
+    margin-left: 270px;
+
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+
+.about-us {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    margin-top: 130px;
+
+}
+
+.about-us-title {
+
+    width: 707px;
+    height: 507px;
+
+    margin-top: 90px;
+    text-align: left;
+}
+
+.about-us img {
+    border-radius: 30px;
+
+}
+
+.about-info-list {
+    padding-top: 20px;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+
+    height: 147px;
+
+    border-radius: 20px;
+
+    background: #F4F4F4;
+}
+
+.about-info-list li {
+    /* 10,000 */
+
+    text-align: center;
+
+}
+
+.about-info-list li strong {
+    width: 161px;
+    height: 75px;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 75px;
+
+    color: #000000;
+}
+
+.about-info-list p {
+    /* Wedding Vendors */
+    margin-top: 0;
+
+    width: 268px;
+    height: 45px;
+
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+
+    color: #000000;
+
+
+}

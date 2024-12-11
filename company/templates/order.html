@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Back Button */
+        .btn-back {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .btn-back:hover {
+            background-color: #0056b3;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 16px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Buttons */
+        .btn-accept {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .btn-accept:hover {
+            background-color: #218838;
+        }
+
+        /* Error and No Orders Messages */
+        .message {
+            text-align: center;
+            font-size: 16px;
+            color: #999;
+            margin: 20px;
+        }
+
+        .error-message {
+            color: #d9534f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'about' %}" class="btn-back">&larr; Back</a>
+
+        <h1 style="text-align: center; color: #0062cc;">Order Management</h1>
+{% if error %}
+            <p class="message error-message">{{ error }}</p>
+        {% else %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>User</th>
+                        <th>Order Date</th>
+                        <th>Planing Date</th>
+                        <th>Accepted</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if orders %}
+                        {% for order in orders %}
+                        <tr>
+                            <td>{{ order.order.id }}</td>
+                            <td><a href="{% url 'profile_user' order.order.user.pk %}">{{ order.order.user.name }}</a></td>
+                            <td>{{ order.order.order_date|date:"Y-m-d H:i" }}</td>
+                            <td>{{ order.order.date }}</td>
+                            <td>
+                                {% if order.accepted %}
+                                    Accepted on {{ order.accepted_date|date:"Y-m-d H:i" }}
+                                {% else %}
+                                    Not Accepted
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if not order.accepted %}
+                                <form method="POST" action="{% url 'accept_order' order.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn-accept">Accept</button>
+                                </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="message">No orders available.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Show Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        input[type="text"]:focus,
+        select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        select[multiple] {
+            height: 100px;
+            overflow-y: auto;
+        }
+
+        .add-button {
+             width: 30px;
+            height: 30px;
+            margin-left: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .add-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h1>Show register</h1>
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="show_name">Show Name:</label>
+            <input type="text" id="show_name" name="show_name" style="width: 96%" required>
+        </div>
+
+        <div class="form-group">
+            <label for="Price">Price of show:</label>
+            <input type="number" name="price" min="1" max="1000000" required>
+        </div>
+
+        <div class="form-group">
+            <label for="region">Region:</label>
+            {{ addressForm.region }}
+
+            <label for="city">City:</label>
+            {{ addressForm.city }}
+        </div>
+
+        <div class="form-group">
+            <label for="host">
+                Host:
+                <button type="button" class="add-button" onclick="window.location.href='{% url 'register_entity' 'host' %}'">+</button>
+
+            </label>
+            <select id="host" name="host">
+                {% for host in hosts %}
+                    <option value="{{ host.id }}">{{ host.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+                <label for="photographer">
+                    Photographer:
+                    <button type="button" class="add-button" onclick="window.location.href='{% url 'register_entity' 'photographer' %}'">+</button>
+                </label>
+                <select id="photographer" name="photographer">
+                    {% for photographer in photographers %}
+                        <option value="{{ photographer.id }}">{{ photographer.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="camera_operator">
+                    Camera Operator:
+                    <button type="button" class="add-button" onclick="window.location.href='{% url 'register_entity' 'camera_operator' %}'">+</button>
+                </label>
+                <select id="camera_operator" name="camera_operator">
+                    {% for camera_operator in camera_operators %}
+                        <option value="{{ camera_operator.id }}">{{ camera_operator.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="dancers">
+                    Dancers:
+                    <button type="button" class="add-button" onclick="window.location.href='{% url 'register_entity' 'dancer' %}'">+</button>
+                </label>
+                <select id="dancers" name="dancers" multiple>
+                    {% for dancer in dancers %}
+                        <option value="{{ dancer.id }}">{{ dancer.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="singers">
+                    Singers:
+                    <button type="button" class="add-button" onclick="window.location.href='{% url 'register_entity' 'singer' %}'">+</button>
+                </label>
+                <select id="singers" name="singers" multiple>
+                    {% for singer in singers %}
+                        <option value="{{ singer.id }}">{{ singer.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit">Register Show Profile</button>
+        </form>
+</body>
+<script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const regionSelect = document.querySelector("select[name='region']");
+                const citySelect = document.querySelector("select[name='city']");
+
+                regionSelect.addEventListener("change", function () {
+                    const regionId = this.value;
+
+                    citySelect.innerHTML = '<option value="">Select city</option>';
+
+                    if (regionId) {
+                        fetch(`/cities/${regionId}/`)
+                            .then(response => response.json())
+                            .then(data => {
+                                data.forEach(city => {
+                                    const option = document.createElement("option");
+                                    option.value = city.id;
+                                    option.text = city.name;
+                                    citySelect.add(option);
+                                });
+                            })
+                            .catch(error => console.error("Error fetching cities:", error));
+                    }
+                });
+            });
+</script>
+</html>

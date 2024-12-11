@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'register.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Register Your Company</h1>
+        <form method="post" enctype="multipart/form-data" action="{% url 'venue_register' %}">
+            {% csrf_token %}
+            <label for="company_name">Company Name:</label>
+            <input type="text" name="company_name" required>
+
+            <label for="region">Region:</label>
+            {{ addressForm.region }}
+
+            <label for="city">City:</label>
+            {{ addressForm.city }}
+
+            <label for="capacity">Capacity:</label>
+            <input type="number" name="capacity" min="1" max="1000" required>
+
+            <label for="capacity">Price per person:</label>
+            <input type="number" name="price" min="1" max="1000000" required>
+
+            <label for="venue_type">Venue Type:</label>
+            <select name="venue_type" required>
+                <option value="">Select Venue Type</option>
+                <option value="restaurant">Restaurant</option>
+                <option value="cafe">Cafe</option>
+                <option value="hall">Hall</option>
+                <option value="club">Club</option>
+                <option value="other">Other</option>
+            </select>
+
+            <label for="image">Company Image:</label>
+            <input type="file" name="image" accept="image/*">
+
+            <label for="video">Company Video:</label>
+            <input type="file" name="video" accept="video/*">
+
+            <button type="submit">Register</button>
+        </form>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const regionSelect = document.querySelector("select[name='region']");
+                const citySelect = document.querySelector("select[name='city']");
+
+                regionSelect.addEventListener("change", function () {
+                    const regionId = this.value;
+
+                    citySelect.innerHTML = '<option value="">Select city</option>';
+
+                    if (regionId) {
+                        fetch(`/cities/${regionId}/`)
+                            .then(response => response.json())
+                            .then(data => {
+                                data.forEach(city => {
+                                    const option = document.createElement("option");
+                                    option.value = city.id;
+                                    option.text = city.name;
+                                    citySelect.add(option);
+                                });
+                            })
+                            .catch(error => console.error("Error fetching cities:", error));
+                    }
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>

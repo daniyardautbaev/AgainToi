@@ -1,0 +1,196 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+    <style>
+        body.search-page {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            color: #333;
+        }
+
+        .search-title {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .search-form {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .search-input {
+            padding: 12px 15px;
+            border-radius: 30px;
+            border: 2px solid #007bff;
+            outline: none;
+            width: 100%;
+            max-width: 400px;
+            font-size: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .search-input:focus {
+            border-color: #0056b3;
+        }
+
+        .search-button {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .search-button:hover {
+            background: linear-gradient(135deg, #0056b3, #004085);
+            transform: scale(1.05);
+        }
+
+        .show-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .show-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            background: #fff;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .show-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .show-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .show-card .card-body {
+            padding: 15px;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .card-text {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .card-footer {
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .card-footer a.btn {
+            background-color: #007bff;
+            color: white;
+            border-radius: 30px;
+            padding: 8px 15px;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .card-footer a.btn:hover {
+            background-color: #0056b3;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination .page-link {
+            color: #007bff;
+            border: none;
+            background-color: transparent;
+            transition: color 0.3s;
+        }
+
+        .pagination .page-link:hover {
+            color: #0056b3;
+            transform: scale(1.1);
+        }
+
+        .pagination .active .page-link {
+            background-color: #007bff;
+            color: white;
+            border-radius: 30px;
+        }
+    </style>
+
+    <div class="container">
+        <h2 class="search-title">Search Results for Venues</h2>
+
+        <form class="search-form" method="GET">
+            <input type="text" class="search-input" name="q" value="{{ query }}" placeholder="Search for venues...">
+            <button type="submit" class="search-button">Search</button>
+        </form>
+
+        <!-- Show Cards Grid -->
+        <div class="show-grid">
+            {% for show in shows %}
+            <div class="show-card">
+                {% if show.host.image %}
+{#                    <img src="{% static 'media/images/gosti.jpg' %}" alt="Default Image">#}
+                    <img src="{{ show.host.image.url }}" alt="Host Image">
+                {% else %}
+                    <img src="{% static 'media/images/gosti.jpg' %}" alt="Default Image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ show.show_name }}</h5>
+                    <p class="card-text">
+                        <strong>Host:</strong> {{ show.host.name }}<br>
+                        <strong>Photographer:</strong> {{ show.photographer.name|default:"N/A" }}<br>
+                        <strong>Camera Operator:</strong> {{ show.camera_operator.name|default:"N/A" }}<br>
+                        <strong>Price:</strong> {{ show.price|default:"-" }} tg
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'show_profile_user' show.pk %}" class="btn">View Details</a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>No shows available at the moment.</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="pagination">
+            {% if is_paginated %}
+                {% if page_obj.has_previous %}
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                {% endif %}
+                <span class="page-link active">{{ page_obj.number }}</span>
+                {% if page_obj.has_next %}
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Website{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600;700&display=swap'"
+          rel="stylesheet">
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'home/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/about.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/contact.css' %}">
+
+    {# media styles #}
+
+    <link rel="stylesheet" href="{% static 'media/css/media.css' %}">
+    <link rel="stylesheet" href="{% static 'media/css/media-detail.css' %}">
+    <link rel="stylesheet" href="{% static 'media/css/media-form.css' %}">
+    <style>
+        .menu {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .menu ul {
+            display: table-row;
+        }
+        .menu li {
+            display: table-cell;
+            position: relative;
+        }
+        .menu li a {
+            display: block;
+            padding: 5px 15px;
+            color: #0f0f0f;
+            text-decoration: none;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+        }
+        .menu-caret:after {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            margin-left: .255em;
+            vertical-align: .255em;
+            content: "";
+            border-top: 3px solid;
+            border-right: 3px solid transparent;
+            border-bottom: 0;
+            border-left: 3px solid transparent;
+        }
+        .menu a:hover {
+            background: #666;
+            color: #C4C4C4;
+        }
+        .menu li:hover ul  {
+            display: block;
+            position: absolute;
+            top: 100%;
+            background: #666;
+            margin: 0;
+            padding: 10px 20px;
+            width: 100%;
+            z-index: 9999;
+        }
+        .menu ul ul  {
+            display: none;
+        }
+        .menu ul ul li  {
+            display: block;
+            background: #666;
+            padding: 5px 0;
+        }
+        .menu ul ul li a  {
+            display: block;
+            padding: 0;
+            background: #666;
+            text-align: left;
+        }
+        .button-logout{
+            border: none;
+            background-color: transparent;
+            font-size: 16px;
+            display: block;
+            padding: 5px 15px;
+            color: #0f0f0f;
+            text-decoration: none;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+        }
+        .button-logout:hover {
+            background: #666;
+            color: #C4C4C4;
+        }
+    </style>
+</head>
+
+<body>
+<div class="wrapper">
+
+    <div class="menu">
+        {% if user.is_authenticated %}
+            <ul>
+                <li>
+                    {% if user.user_type == 'user' %}
+                        <a href="{% url 'view_cart' %}" class="login-link">CART</a>
+                    {% elif user.user_type == 'venue' %}
+                        <a href="{% url "order" %}" class="login-link">ORDER CONTROL</a>
+                    {% else %}
+                        <a href="{% url "order_show" %}" class="login-link">ORDER CONTROL</a>
+                    {% endif %}
+                </li>
+                <li>
+                    <a href="{% url user.user_type|add:"_profile" %}" class="login-link">PROFILE</a>
+                </li>
+                <li>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button class="button-logout" type="submit">LOGOUT</button>
+                    </form>
+                </li>
+            </ul>
+        {% else %}
+            <ul>
+                <li><a href="{% url 'login' %}" class="login-link">LOGIN</a></li>
+                <li>
+                    <a class="menu-caret" href="#">SIGN UP</a>
+                    <ul>
+                        <li class="menu-caret-item"><a href="{% url 'register' %}?user_type=user">USER</a></li>
+                        <li class="menu-caret-item"><a href="{% url 'register' %}?user_type=venue">VENUE</a></li>
+                        <li class="menu-caret-item"><a href="{% url 'register' %}?user_type=show">SHOW</a></li>
+                    </ul>
+                </li>
+            </ul>
+        {% endif %}
+    </div>
+
+    <header class="header">
+        <div class="header-title">
+            AgainTOI
+        </div>
+
+        <nav class="nav">
+            <ul class="nav-list">
+                <li><a href="{% url '' %}">Home</a></li>
+                <li><a href="{% url 'discount_list' %}">Discount</a></li>
+                <li><a href="{% url 'search_places' %}">Venue</a></li>
+                <li><a href="{% url 'search_shows' %}">Shows</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'media' %}">Media</a></li>
+                <li><a href="{% url 'contact' %}">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+
+        {% endblock %}
+    </main>
+
+    {#    <footer>#}
+    {#        <p>&copy; 2024 My Website. All rights reserved.</p>#}
+    {#    </footer>#}
+</div>
+
+</body>
+</html>

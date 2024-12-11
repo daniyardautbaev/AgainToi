@@ -1,0 +1,15 @@
+{% extends 'home/base.html' %}
+{% block content %}
+    <h1>Event Types</h1>
+    <ul>
+        {% for event_type in event_types %}
+            <li>
+                <h2>{{ event_type.name }}</h2>
+                <p>{{ event_type.description }}</p>
+                {% if event_type.image %}
+                    <img src="{{ event_type.image.url }}" alt="{{ event_type.name }}">
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

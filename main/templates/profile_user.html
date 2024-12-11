@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="{% static 'profile.css' %}">
+    <style>
+        .back-btn {
+            display: inline-block;
+            height: 20px;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #ffffff;
+            background: #0062cc;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .back-btn:hover {
+            background: #004bb5;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-profile">
+        <a href="javascript:history.back()" class="back-btn">&larr; Back</a>
+        {% if user_profile.image %}
+            <img class="profile-image" src="{{ user_profile.image.url }}" alt="User Image">
+        {% else %}
+            <img class="profile-image" src="../../media/profile_images/profile.jpeg" alt="Default User Image">
+        {% endif %}
+        <h1>User Profile</h1>
+    </div>
+    <div class="profile-detail">
+        <p><strong>Email:</strong> {{ user.email }}</p>
+    </div>
+
+    <div class="profile-detail">
+        <p><strong>Username:</strong> {{ user.name }}</p>
+    </div>
+
+    <div class="profile-detail">
+        <p><strong>Phone:</strong> {{ user_profile.phone }}</p>
+    </div>
+
+    <div class="profile-detail">
+        <p><strong>Address:</strong> {{ user_profile.address }}</p>
+    </div>
+</body>
+</html>

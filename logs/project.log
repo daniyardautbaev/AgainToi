@@ -1,0 +1,91 @@
+INFO 2024-12-11 00:59:01,076 autoreload /Users/yermakhankasymzhomart/Desktop/Django/AgainToi/Django project/AgainToi/AgainToi/settings.py changed, reloading.
+INFO 2024-12-11 00:59:01,441 autoreload Watching for file changes with StatReloader
+INFO 2024-12-11 00:59:16,380 views Order 23 created by user None for venue Bella grand on 2024-12-12
+INFO 2024-12-11 00:59:23,287 views Order 24 created by user None for show Algabas stars on 2024-12-12
+INFO 2024-12-11 01:01:44,295 autoreload /Users/yermakhankasymzhomart/Desktop/Django/AgainToi/Django project/AgainToi/main/views.py changed, reloading.
+INFO 2024-12-11 01:15:20,668 autoreload Watching for file changes with StatReloader
+INFO 2024-12-11 01:24:21,189 autoreload Watching for file changes with StatReloaderINFO 2024-12-11 01:38:01,304 autoreload /Users/yermakhankasymzhomart/Desktop/Django/AgainToi/Django project/AgainToi/main/views.py changed, reloading.
+INFO 2024-12-11 01:38:01,665 autoreload Watching for file changes with StatReloader
+INFO 2024-12-11 01:41:11,759 views Order 27 created by user  for venue Nurly tau on 2024-12-12
+INFO 2024-12-11 01:42:25,186 autoreload /Users/yermakhankasymzhomart/Desktop/Django/AgainToi/Django project/AgainToi/main/views.py changed, reloading.
+INFO 2024-12-11 01:42:25,553 autoreload Watching for file changes with StatReloader
+INFO 2024-12-11 01:42:37,115 views Order 28 created by user None for venue Nurly tau on 2024-12-12INFO 2024-12-11 01:49:38,294 autoreload Watching for file changes with StatReloader
+WARNING 2024-12-11 01:50:46,149 log Not Found: /accounts/login/
+WARNING 2024-12-11 01:50:46,150 basehttp "GET /accounts/login/?next=/main/venue/15/ HTTP/1.1" 404 5857
+INFO 2024-12-11 01:55:19,189 views Order 29 created by user None for venue Altyn saray on 2024-12-13
+INFO 2024-12-11 01:55:45,624 views Order 29 accepted and added to cart for user None.
+ERROR 2024-12-11 01:56:23,012 log Internal Server Error: /main/show/2/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yermakhankasymzhomart/Desktop/Django/AgainToi/Django project/AgainToi/main/views.py", line 180, in show_profile_user
+    logger.info(f"Order {order.id} created by user {User.objects.get(user=user).name} for show {show_profile.show_name} on {date}")
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 635, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 1476, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 1494, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/django/db/models/query.py", line 1501, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1609, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1641, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1491, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1303, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1768, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'user' into field. Choices are: cart, companyprofile, date_joined, email, first_name, groups, id, is_active, is_staff, is_superuser, last_login, last_name, logentry, media, name, outstandingtoken, password, review, searchhistory, showprofile, showreview, user_permissions, user_type, userorder, userprofile
+ERROR 2024-12-11 01:56:23,027 basehttp "POST /main/show/2/ HTTP/1.1" 500 122907
+INFO 2024-12-11 01:59:30,059 autoreload Watching for file changes with StatReloader
+INFO 2024-12-11 02:03:42,802 views Order 31 created by user None for venue Altyn saray on 2024-12-13
+INFO 2024-12-11 02:04:14,725 views Order 31 accepted and added to cart for user None.
+INFO 2024-12-11 02:04:48,718 views Order 32 created by user None for show Daudidau on 2024-12-13
+INFO 2024-12-11 02:05:02,794 views Order 32 accepted and added to cart for user None (Daudidau show).
+INFO 2024-12-11 02:18:58,743 autoreload Watching for file changes with StatReloader
+INFO 2024-12-11 02:28:19,555 autoreload /Users/yermakhankasymzhomart/Desktop/Django/AgainToi/Django project/AgainToi/main/views.py changed, reloading.
+INFO 2024-12-11 02:28:19,904 autoreload Watching for file changes with StatReloader
+INFO 2024-12-11 04:07:31,572 autoreload Watching for file changes with StatReloader
+WARNING 2024-12-11 04:07:43,919 log Not Found: /accounts/login/
+WARNING 2024-12-11 04:07:43,920 basehttp "GET /accounts/login/?next=/main/show/2/ HTTP/1.1" 404 5855
+WARNING 2024-12-11 04:07:46,432 log Not Found: /accounts/login/
+WARNING 2024-12-11 04:07:46,433 basehttp "GET /accounts/login/?next=/main/show/2/ HTTP/1.1" 404 5855
+WARNING 2024-12-11 04:07:51,206 log Unauthorized: /user/login/
+WARNING 2024-12-11 04:07:51,206 basehttp "POST /user/login/ HTTP/1.1" 401 6881
+INFO 2024-12-11 04:45:40,304 autoreload Watching for file changes with StatReloader
+WARNING 2024-12-11 04:45:50,420 log Not Found: /accounts/login/
+WARNING 2024-12-11 04:45:50,421 basehttp "GET /accounts/login/?next=/main/venue/13/ HTTP/1.1" 404 5857
+INFO 2024-12-11 05:23:11,023 autoreload Watching for file changes with StatReloader
+INFO 2024-12-11 17:04:23,678 autoreload Watching for file changes with StatReloader
+WARNING 2024-12-11 17:04:27,161 log Not Found: /apple-touch-icon-precomposed.png
+WARNING 2024-12-11 17:04:27,162 basehttp "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 5887
+WARNING 2024-12-11 17:04:27,167 log Not Found: /apple-touch-icon.png
+WARNING 2024-12-11 17:04:27,167 basehttp "GET /apple-touch-icon.png HTTP/1.1" 404 5851
+WARNING 2024-12-11 17:07:34,165 log Not Found: /accounts/login/
+WARNING 2024-12-11 17:07:34,166 basehttp "GET /accounts/login/?next=/main/show/2/ HTTP/1.1" 404 5855
+WARNING 2024-12-11 17:07:36,502 log Not Found: /accounts/login/
+WARNING 2024-12-11 17:07:36,503 basehttp "GET /accounts/login/?next=/main/show/3/ HTTP/1.1" 404 5855
+WARNING 2024-12-11 17:08:03,407 log Unauthorized: /user/login/
+WARNING 2024-12-11 17:08:03,408 basehttp "POST /user/login/ HTTP/1.1" 401 6881
+WARNING 2024-12-11 17:08:39,301 log Not Found: /accounts/login/
+WARNING 2024-12-11 17:08:39,302 basehttp "GET /accounts/login/?next=/main/venue/15/ HTTP/1.1" 404 5857
